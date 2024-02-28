@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using WebApi.DBOperations;
 
 namespace WebApi;
 
@@ -7,6 +9,9 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddDbContext<BookStoreDBContext>(
+            options => options.UseInMemoryDatabase(databaseName: "BookStoreDb")
+        );
         // Add services to the container.
 
         builder.Services.AddControllers();
@@ -15,6 +20,12 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
+
+        using (var scope = app.Services.CreateScope()) 
+        { 
+            var services = scope.ServiceProvider; 
+            DataGenerator.Initialize(services); 
+        }
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
