@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using WebApi.DBOperations;
 
@@ -12,6 +13,7 @@ public class Program
         builder.Services.AddDbContext<BookStoreDBContext>(
             options => options.UseInMemoryDatabase(databaseName: "BookStoreDb")
         );
+        builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
         // Add services to the container.
 
         builder.Services.AddControllers();
@@ -21,10 +23,10 @@ public class Program
 
         var app = builder.Build();
 
-        using (var scope = app.Services.CreateScope()) 
-        { 
-            var services = scope.ServiceProvider; 
-            DataGenerator.Initialize(services); 
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            DataGenerator.Initialize(services);
         }
 
         // Configure the HTTP request pipeline.
