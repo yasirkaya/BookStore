@@ -40,18 +40,12 @@ public class BookController : ControllerBase
     {
         BookDetailViewModel result;
         GetBookByIdQuery query = new(_context, _mapper);
-        try
-        {
-            query.Id = id;
-            GetBookByIdQueryValidator validator = new GetBookByIdQueryValidator();
-            validator.ValidateAndThrow(query);
-            result = query.Handle();
-        }
-        catch (Exception ex)
-        {
 
-            return BadRequest(ex.Message);
-        }
+        query.Id = id;
+        GetBookByIdQueryValidator validator = new GetBookByIdQueryValidator();
+        validator.ValidateAndThrow(query);
+        result = query.Handle();
+
 
         return Ok(result);
     }
@@ -60,34 +54,27 @@ public class BookController : ControllerBase
     public IActionResult AddBook([FromBody] CreateBookModel newBook)
     {
         CreateBookCommand command = new(_context, _mapper);
-        try
-        {
 
-            command.Model = newBook;
-            CreateBookCommandValidator validator = new CreateBookCommandValidator();
-            //ValidationResult result = validator.Validate(command);
-            validator.ValidateAndThrow(command);
-            command.Handle();
-            // if (!result.IsValid)
-            // {
-            //     foreach (var item in result.Errors)
-            //     {
-            //         System.Console.WriteLine("Özellik " + item.PropertyName + "- Error Message: " + item.ErrorMessage);
-            //     }
-            // }
-            // else
-            // {
-            //     
-            // }
+        command.Model = newBook;
+        CreateBookCommandValidator validator = new CreateBookCommandValidator();
+        //ValidationResult result = validator.Validate(command);
+        validator.ValidateAndThrow(command);
+        command.Handle();
+        // if (!result.IsValid)
+        // {
+        //     foreach (var item in result.Errors)
+        //     {
+        //         System.Console.WriteLine("Özellik " + item.PropertyName + "- Error Message: " + item.ErrorMessage);
+        //     }
+        // }
+        // else
+        // {
+        //     
+        // }
 
 
 
-        }
-        catch (Exception ex)
-        {
 
-            return BadRequest(ex.Message);
-        }
 
         return Ok();
 
@@ -96,20 +83,14 @@ public class BookController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updatedBook)
     {
-        try
-        {
-            UpdateBookCommand command = new(_context);
-            command.BookId = id;
-            command.Model = updatedBook;
-            UpdateBookCommandValidator validator = new();
-            validator.ValidateAndThrow(command);
-            command.Handle();
-        }
-        catch (Exception ex)
-        {
 
-            return BadRequest(ex.Message);
-        }
+        UpdateBookCommand command = new(_context);
+        command.BookId = id;
+        command.Model = updatedBook;
+        UpdateBookCommandValidator validator = new();
+        validator.ValidateAndThrow(command);
+        command.Handle();
+
 
         return Ok();
 
@@ -119,18 +100,12 @@ public class BookController : ControllerBase
     public IActionResult DeleteBook(int id)
     {
         DeleteBookCommand command = new(_context);
-        try
-        {
-            command.BookId = id;
-            DeleteBookCommnandValidator validator = new DeleteBookCommnandValidator();
-            validator.ValidateAndThrow(command);
-            command.Handle();
-        }
-        catch (Exception ex)
-        {
 
-            return BadRequest(ex.Message);
-        }
+        command.BookId = id;
+        DeleteBookCommnandValidator validator = new DeleteBookCommnandValidator();
+        validator.ValidateAndThrow(command);
+        command.Handle();
+
         return Ok();
     }
 

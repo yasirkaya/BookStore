@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using WebApi.DBOperations;
+using WebApi.Middlewares;
 
 namespace WebApi;
 
@@ -40,6 +41,7 @@ public class Program
 
         app.UseAuthorization();
 
+        app.UseCustomExeptionMiddleware();
 
         app.MapControllers();
 
