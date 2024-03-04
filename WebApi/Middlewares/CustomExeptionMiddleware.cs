@@ -33,11 +33,11 @@ public class CustomExeptionMiddleware
         catch (System.Exception ex)
         {
             watch.Stop();
-            await HandleExtension(context, ex, watch);
+            await HandleException(context, ex, watch);
         }
     }
 
-    private Task HandleExtension(HttpContext context, Exception ex, Stopwatch watch)
+    private Task HandleException(HttpContext context, Exception ex, Stopwatch watch)
     {
         string message = "[Error] HTTP " + context.Request.Method + " - " + context.Response.StatusCode + " Error Message " + ex.Message +
                 " in " + watch.Elapsed.TotalMilliseconds + "ms";
