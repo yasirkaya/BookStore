@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.BookOperations.CreateBook;
 using WebApi.BookOperations.DeleteBook;
@@ -42,6 +43,8 @@ public class BookController : ControllerBase
         try
         {
             query.Id = id;
+            GetBookByIdQueryValidator validator = new GetBookByIdQueryValidator();
+            validator.ValidateAndThrow(query);
             result = query.Handle();
         }
         catch (Exception ex)
@@ -61,7 +64,22 @@ public class BookController : ControllerBase
         {
 
             command.Model = newBook;
+            CreateBookCommandValidator validator = new CreateBookCommandValidator();
+            //ValidationResult result = validator.Validate(command);
+            validator.ValidateAndThrow(command);
             command.Handle();
+            // if (!result.IsValid)
+            // {
+            //     foreach (var item in result.Errors)
+            //     {
+            //         System.Console.WriteLine("Özellik " + item.PropertyName + "- Error Message: " + item.ErrorMessage);
+            //     }
+            // }
+            // else
+            // {
+            //     
+            // }
+
 
 
         }
@@ -83,6 +101,8 @@ public class BookController : ControllerBase
             UpdateBookCommand command = new(_context);
             command.BookId = id;
             command.Model = updatedBook;
+            UpdateBookCommandValidator validator = new();
+            validator.ValidateAndThrow(command);
             command.Handle();
         }
         catch (Exception ex)
@@ -102,6 +122,8 @@ public class BookController : ControllerBase
         try
         {
             command.BookId = id;
+            DeleteBookCommnandValidator validator = new DeleteBookCommnandValidator();
+            validator.ValidateAndThrow(command);
             command.Handle();
         }
         catch (Exception ex)
