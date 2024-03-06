@@ -1,6 +1,6 @@
 using WebApi.DBOperations;
 
-namespace WebApi.BookOperations.UpdateBook;
+namespace WebApi.Application.BookOperations.Commands.UpdateBook;
 
 public class UpdateBookCommand
 {
@@ -19,13 +19,13 @@ public class UpdateBookCommand
             throw new InvalidOperationException("Kitap Bulunamadı.");
 
         book.GenreId = Model.GenreId != default ? Model.GenreId : book.GenreId;
-        book.Title = book.Title != default ? Model.Title : book.Title;
+        book.Title = string.IsNullOrEmpty(Model.Title.Trim()) ? book.Title : Model.Title;
         _dbContext.SaveChanges();
     }
 
     public class UpdateBookModel
     {
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public int GenreId { get; set; }
     }
 }

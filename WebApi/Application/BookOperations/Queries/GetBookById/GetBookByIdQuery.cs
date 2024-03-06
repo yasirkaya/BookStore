@@ -1,9 +1,8 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
-using WebApi.Common;
+using Microsoft.EntityFrameworkCore;
 using WebApi.DBOperations;
 
-namespace WebApi.BookOperations.GetBookById;
+namespace WebApi.Application.BookOperations.Queries.GetBookById;
 
 public class GetBookByIdQuery
 {
@@ -18,7 +17,7 @@ public class GetBookByIdQuery
 
     public BookDetailViewModel Handle()
     {
-        var book = _dbContext.Books.Where(book => book.Id == Id).SingleOrDefault();
+        var book = _dbContext.Books.Include(x => x.Genre).Where(book => book.Id == Id).SingleOrDefault();
         if (book is null)
             throw new InvalidOperationException("Kitap Bulunamadı.");
         BookDetailViewModel model = _mapper.Map<BookDetailViewModel>(book);
