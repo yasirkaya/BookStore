@@ -1,38 +1,43 @@
 using Microsoft.EntityFrameworkCore;
+using WebApi.Entities;
 
 namespace WebApi.DBOperations;
 
-public class DataGenerator 
+public class DataGenerator
 {
     public static void Initialize(IServiceProvider serviceProvider)
     {
-        using(var context = new BookStoreDBContext(serviceProvider.GetRequiredService<DbContextOptions<BookStoreDBContext>>()))
+        using (var context = new BookStoreDBContext(serviceProvider.GetRequiredService<DbContextOptions<BookStoreDBContext>>()))
         {
-            if(context.Books.Any()){
+            if (context.Books.Any())
+            {
                 return;
             }
 
             context.Books.AddRange(
-                new Book{
+                new Book
+                {
                     // Id = 1,   [DatabaseGenerated(DatabaseGeneratedOption.Identity)] ile otomatikleştirdik.
-                    Title = "Lean Startup", 
+                    Title = "Lean Startup",
                     GenreId = 1, //Personal Growth
                     PageCount = 200,
-                    PublishDate = new DateTime(2001,06,12)
+                    PublishDate = new DateTime(2001, 06, 12)
                 },
-                new Book{
+                new Book
+                {
                     // Id = 2, 
-                    Title = "Herland", 
+                    Title = "Herland",
                     GenreId = 2, //Science Fiction
                     PageCount = 250,
-                    PublishDate = new DateTime(2010,05,23)
+                    PublishDate = new DateTime(2010, 05, 23)
                 },
-                new Book{
+                new Book
+                {
                     // Id = 3, 
-                    Title = "Dune", 
+                    Title = "Dune",
                     GenreId = 2, //Science Fiction
                     PageCount = 540,
-                    PublishDate = new DateTime(2001,12,21)
+                    PublishDate = new DateTime(2001, 12, 21)
                 }
             );
 

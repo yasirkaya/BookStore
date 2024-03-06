@@ -1,4 +1,5 @@
 using AutoMapper;
+using WebApi.Entities;
 using static WebApi.BookOperations.CreateBook.CreateBookCommand;
 using static WebApi.BookOperations.GetBookById.GetBookByIdQuery;
 using static WebApi.BookOperations.GetBooks.GetBooksQuery;
