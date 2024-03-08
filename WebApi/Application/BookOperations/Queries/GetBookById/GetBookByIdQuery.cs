@@ -17,7 +17,7 @@ public class GetBookByIdQuery
 
     public BookDetailViewModel Handle()
     {
-        var book = _dbContext.Books.Include(x => x.Genre).Where(book => book.Id == Id).SingleOrDefault();
+        var book = _dbContext.Books.Include(x => x.Genre).Include(x => x.Author).Where(book => book.Id == Id).SingleOrDefault();
         if (book is null)
             throw new InvalidOperationException("Kitap Bulunamadı.");
         BookDetailViewModel model = _mapper.Map<BookDetailViewModel>(book);
@@ -30,5 +30,6 @@ public class GetBookByIdQuery
         public int PageCount { get; set; }
         public string? PublishDate { get; set; }
         public string? Genre { get; set; }
+        public string? Author { get; set; }
     }
 }
